@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/nicolasbrun3094/3api/issues"
   },
-  "homepage": "https://github.com/nicolasbrun3094/3api#readme"
+  "homepage": "https://github.com/nicolasbrun3094/3api#readme",
+  "dependencies": {
+    "mongoose": "^8.0.2",
+    "passport-local-mongoose": "^8.0.0"
+  }
 }
