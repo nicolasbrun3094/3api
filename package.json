@@ -1,0 +1,24 @@
+{
+  "name": "3api",
+  "version": "1.0.0",
+  "description": "Project 3APIS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolasbrun3094/3api.git"
+  },
+  "keywords": [
+    "APIS",
+    "Project",
+    "3APIS"
+  ],
+  "author": "Marwen Meddeb - Nicolas Brun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicolasbrun3094/3api/issues"
+  },
+  "homepage": "https://github.com/nicolasbrun3094/3api#readme"
+}
