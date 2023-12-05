@@ -24,7 +24,19 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  employee: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+// Méthode pour vérifier si un utilisateur peut accéder aux informations d'un autre utilisateur
+userSchema.methods.canAccessUser = function (targetUserId) {
+  if (this.role === 'admin' || this._id.equals(targetUserId) || this.employee) {
+    return true;
+  }
+  return false;
+};
 
 userSchema.plugin(passportLocalMongoose);
 
