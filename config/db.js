@@ -7,10 +7,9 @@ Il peut inclure l'URL de la base de données, les paramètres de connexion, etc.
 const mongoose = require('mongoose');
 
 // BD locale Mongo (raildraod)
-const databaseUrl = 'mongodb://localhost/railroad';
 
 mongoose
-    .connect(databaseUrl)
+    .connect('mongodb://127.0.0.1:27017/railroad')
     .then(() => {
       console.log('Connexion à MongoDB RaildRoad réussie !');
     })
