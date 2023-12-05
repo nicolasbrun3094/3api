@@ -2,8 +2,9 @@
   "name": "3api",
   "version": "1.0.0",
   "description": "Project 3APIS",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,14 +16,17 @@
     "Project",
     "3APIS"
   ],
-  "author": "Marwen Meddeb - Nicolas Brun",
+  "author": "Marwen Meddeb - Nicolas Brun - Younes Baddou",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nicolasbrun3094/3api/issues"
   },
   "homepage": "https://github.com/nicolasbrun3094/3api#readme",
   "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "mongoose": "^8.0.2",
+    "passport": "^0.7.0",
     "passport-local-mongoose": "^8.0.0"
   }
 }

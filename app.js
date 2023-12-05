@@ -21,16 +21,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-const userRoutes = require('./routes/userRoutes');
-const trainRoutes = require('./routes/trainRoutes');
-const stationRoutes = require('./routes/stationRoutes');
-const bookingRoutes = require('./routes/bookingRoutes');
+
+// const userRoutes = require('./routes/userRoutes');
+// const trainRoutes = require('./routes/trainRoutes');
+// const stationRoutes = require('./routes/stationRoutes');
+// const bookingRoutes = require('./routes/bookingRoutes');
 
 // Utilisation des routes définies
-app.use('/api/users', userRoutes);
-app.use('/api/trains', trainRoutes);
-app.use('/api/stations', stationRoutes);
-app.use('/api/bookings', bookingRoutes);
+
+// app.use('/api/users', userRoutes);
+// app.use('/api/trains', trainRoutes);
+// app.use('/api/stations', stationRoutes);
+// app.use('/api/bookings', bookingRoutes);
 
 // Port d'écoute du serveur
 const port = process.env.PORT || 3000;
