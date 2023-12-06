@@ -24,6 +24,15 @@ Le projet suit une structure modulaire pour faciliter la maintenance et l'extens
 3. Configurez la base de données dans `config/db.js`.
 4. Lancez l'application : `npm start`
 
+
+## Intégration des Modèles dans MongoDB
+
+1- Démarrer le serveur MongoDB : Assurez-vous que le serveur MongoDB est en cours d'exécution sur votre machine.
+
+2- Créer la base de données 'railroad'
+
+3- Créer des collections : Créez des collections pour les utilisateurs, les trains, les gares et les réservations.
+
 ## Fonctionnalités Principales
 
 - **Gestion des Utilisateurs :** Opérations CRUD avec des rôles (utilisateur normal, administrateur).
@@ -40,5 +49,3 @@ La documentation de l'API est générée en utilisant Swagger/OpenAPI. Vous pouv
 
 - **Base de Données MongoDB :** Mongoose est utilisé pour la gestion de la base de données MongoDB. Assurez-vous que votre base de données est correctement configurée dans `config/db.js`.
 - **Authentification avec Passport :** Passport-Local-Mongoose est utilisé pour simplifier l'authentification avec Passport.
-
----
