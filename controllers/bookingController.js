@@ -120,7 +120,6 @@ exports.validateBooking = async (req, res) => {
         }
 
         // Mettre à jour le statut de la réservation (si nécessaire)
-        // Par exemple, vous pourriez vouloir ajouter un champ `isValidated` dans votre modèle Booking
         booking.isValidated = true;
         await booking.save();
 
