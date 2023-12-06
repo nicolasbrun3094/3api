@@ -111,5 +111,4 @@ module.exports = {
     getStationById,
     updateStation,
     deleteStation
-    // Exporter d'autres fonctions ici si vous en ajoutez
 };
