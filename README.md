@@ -21,7 +21,7 @@ Le projet suit une structure modulaire pour faciliter la maintenance et l'extens
 
 1. Clonez le dépôt : `git clone https://github.com/nicolasbrun3094/3api`
 2. Installez les dépendances : `npm install`
-3. Configurez la base de données dans `config/db.js`.
+3. Configurez la base de données / les ports dans `.env` file .
 4. Lancez l'application : `npm start`
 
 
