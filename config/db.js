@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 // BD locale Mongo (raildraod)
 
 mongoose
-    .connect('mongodb://127.0.0.1:27017/railroad')
+    .connect(process.env.DB_CONNECTION_STRING)
     .then(() => {
       console.log('Connexion à MongoDB RaildRoad réussie !');
     })
