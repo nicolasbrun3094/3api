@@ -4,6 +4,7 @@ const mongoose = require('./config/db'); // Utilisation de la configuration de l
 const passport = require('./config/passport'); // Configuration de Passport pour l'authentification
 const bodyParser = require('body-parser');
 const session = require('express-session');
+
 const app = express();
 
 // Configuration de Passport
