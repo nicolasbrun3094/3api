@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken");
 
+// Clé secrète JWT
+const JWT_SECRET = process.env.JWT_SECRET;
+
 // Middleware d'authentification avec JWT
-module.exports = (req, res, next) => {
+const authMiddleware = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
 
@@ -10,7 +13,7 @@ module.exports = (req, res, next) => {
     }
 
     // Vérification et décodage du token
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET); // Assurez-vous de définir cette variable d'environnement
+    const decodedToken = jwt.verify(token, JWT_SECRET);
 
     req.userData = { userId: decodedToken.userId, role: decodedToken.role };
 
@@ -19,3 +22,5 @@ module.exports = (req, res, next) => {
     res.status(401).json({ error: "Authentification échouée : Token invalide" });
   }
 };
+
+module.exports = { authMiddleware, JWT_SECRET };
