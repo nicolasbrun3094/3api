@@ -18,7 +18,11 @@ const stationSchema = new mongoose.Schema({
   close_hour: {
     type: String,
     required: true,
-  }
+  },
+  image: {
+    type: String,
+    required: true,
+  },
 });
 
 const Station = mongoose.model('Station', stationSchema);
