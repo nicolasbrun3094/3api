@@ -5,108 +5,99 @@
 // controllers/trainController.js
 const Train = require('../models/train');
 
-// Créer un nouveau train
-exports.createTrain = async (req, res) => {
-    try {
-        const { name, start_station, end_station, time_of_departure } = req.body;
-
-        // Création d'une nouvelle instance de Train avec les données reçues
-        const newTrain = new Train({ name, start_station, end_station, time_of_departure });
-
-        // Sauvegarde du nouveau train dans la base de données
-        const train = await newTrain.save();
-
-        // Envoi de la réponse avec le train créé
-        res.status(201).json(train);
-    } catch (error) {
-        // Gestion des erreurs
-        res.status(500).json({ message: error.message });
-    }
+// Fonction d'aide pour vérifier si l'utilisateur est un administrateur
+const isAdmin = (req) => {
+    return req.userData && req.userData.role === 'admin';
 };
 
-// Récupérer la liste de tous les trains
+// Répertorier tous les trains avec tri et limite
 exports.getAllTrains = async (req, res) => {
     try {
-        // Récupération de tous les trains de la base de données
-        const trains = await Train.find();
+        const { sort, limit = 10 } = req.query;
+        let query = Train.find();
 
-        // Envoi de la réponse avec la liste des trains
+        // Tri et limite
+        if (sort) {
+            query = query.sort(sort);
+        }
+        query = query.limit(Number(limit));
+
+        const trains = await query;
         res.json(trains);
     } catch (error) {
-        // Gestion des erreurs
         res.status(500).json({ message: error.message });
     }
 };
 
-// Récupérer un train spécifique par ID
+// Créer un nouveau train
+exports.createTrain = async (req, res) => {
+    if (!isAdmin(req)) {
+        return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
+    }
+
+    try {
+        const { name, start_station, end_station, time_of_departure } = req.body;
+        const newTrain = new Train({ name, start_station, end_station, time_of_departure });
+        const train = await newTrain.save();
+        res.status(201).json(train);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Obtenir un train spécifique par son ID
 exports.getTrainById = async (req, res) => {
     try {
         const { trainId } = req.params;
-
-        // Récupération d'un train spécifique par son ID
         const train = await Train.findById(trainId);
-
         if (!train) {
             return res.status(404).json({ message: "Train not found" });
         }
-
-        // Envoi de la réponse avec le train trouvé
         res.json(train);
     } catch (error) {
-        // Gestion des erreurs
         res.status(500).json({ message: error.message });
     }
 };
 
 // Mettre à jour un train spécifique
 exports.updateTrain = async (req, res) => {
+    if (!isAdmin(req)) {
+        return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
+    }
+
     try {
         const { trainId } = req.params;
-        const { name, start_station, end_station, time_of_departure } = req.body;
-
-        // Mise à jour du train spécifié avec les nouvelles données
-        const updatedTrain = await Train.findByIdAndUpdate(
-            trainId, 
-            { name, start_station, end_station, time_of_departure },
-            { new: true } // L'option { new: true } assure que le train retourné est celui après mise à jour
-        );
-
+        const updateData = req.body;
+        const updatedTrain = await Train.findByIdAndUpdate(trainId, updateData, { new: true });
         if (!updatedTrain) {
             return res.status(404).json({ message: "Train not found" });
         }
-
-        // Envoi de la réponse avec le train mis à jour
         res.json(updatedTrain);
     } catch (error) {
-        // Gestion des erreurs
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Server error" });
     }
 };
 
 // Supprimer un train spécifique
 exports.deleteTrain = async (req, res) => {
+    if (!isAdmin(req)) {
+        return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
+    }
+
     try {
         const { trainId } = req.params;
-
-        // Suppression du train spécifié
-        const train = await Train.findByIdAndRemove(trainId);
-
-        if (!train) {
-            return res.status(404).json({ message: "Train not found" });
-        }
-
-        // Envoi de la réponse confirmant la suppression
+        await Train.findByIdAndDelete(trainId);
         res.status(200).json({ message: "Train deleted successfully" });
     } catch (error) {
-        // Gestion des erreurs
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Server error" });
     }
 };
 
 module.exports = {
-    createTrain,
     getAllTrains,
+    createTrain,
     getTrainById,
     updateTrain,
     deleteTrain
 };
+
