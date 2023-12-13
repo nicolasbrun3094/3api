@@ -10,7 +10,7 @@ const options = {
       description: 'Documentation for RailRoad API',
     },
   },
-  apis: ['./routes/*.js'], // Spécifiez le chemin de vos fichiers de route
+  apis: ['./routes/*.js'],
 };
 
 const specs = swaggerJsdoc(options);
