@@ -5,20 +5,28 @@
 // controllers/stationController.js
 const Station = require('../models/station');
 const Train = require('../models/train');
+const multer = require('multer');
 
+//Image Upload
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 // Fonction d'aide pour vérifier si l'utilisateur est un administrateur
 const isAdmin = (req) => {
     return req.userData && req.userData.role === 'admin';
 };
 
 // Créer une nouvelle station
-exports.createStation = async (req, res) => {
+exports.createStation = upload.single('image'), async (req, res) => {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
     try {
         const { name, open_hour, close_hour } = req.body;
-        const newStation = new Station({ name, open_hour, close_hour });
+
+        // Récupérer l'image depuis le champ 'image' de la requête
+        const image = req.file.buffer.toString('base64');
+
+        const newStation = new Station({ name, open_hour, close_hour, image });
         const station = await newStation.save();
         res.status(201).json(station);
     } catch (error) {
@@ -52,14 +60,18 @@ exports.getStationById = async (req, res) => {
 };
 
 // Mettre à jour une station spécifique
-exports.updateStation = async (req, res) => {
+exports.updateStation = upload.single('image'), async (req, res) => {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
     try {
         const { stationId } = req.params;
         const { name, open_hour, close_hour } = req.body;
-        const updatedStation = await Station.findByIdAndUpdate(stationId, { name, open_hour, close_hour }, { new: true });
+
+        // Récupérer la nouvelle image depuis le champ 'image' de la requête
+        const image = req.file.buffer.toString('base64');
+
+        const updatedStation = await Station.findByIdAndUpdate(stationId, { name, open_hour, close_hour, image }, { new: true });
         if (!updatedStation) {
             return res.status(404).json({ message: "Station not found" });
         }

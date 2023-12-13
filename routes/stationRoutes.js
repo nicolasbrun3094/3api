@@ -7,6 +7,10 @@ const express = require('express');
 const router = express.Router();
 const stationController = require('../controllers/stationController');
 const { authMiddleware } = require('../utils/auth');
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 /**
  * @swagger
@@ -25,6 +29,7 @@ const { authMiddleware } = require('../utils/auth');
  *         - name
  *         - open_hour
  *         - close_hour
+ *         - image
  *       properties:
  *         name:
  *           type: string
@@ -35,10 +40,15 @@ const { authMiddleware } = require('../utils/auth');
  *         close_hour:
  *           type: string
  *           description: Heure de fermeture de la station
+ *         image:
+ *           type: string
+ *           format: binary
+ *           description: Image de la station (base64)
  *       example:
  *         name: Gare Centrale
  *         open_hour: "08:00"
  *         close_hour: "22:00"
+ *         image: "base64-encoded-image-data"
  */
 
 
@@ -54,7 +64,7 @@ const { authMiddleware } = require('../utils/auth');
  *       description: Données de la nouvelle station
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             $ref: '#/components/schemas/Station'
  *     responses:
@@ -73,7 +83,7 @@ const { authMiddleware } = require('../utils/auth');
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/', authMiddleware, stationController.createStation);
+router.post('/', authMiddleware, upload.single('image'), stationController.createStation);
 
 /**
  * @swagger
