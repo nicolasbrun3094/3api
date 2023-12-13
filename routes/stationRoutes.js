@@ -1,6 +1,6 @@
 /*
-Définition des routes liées aux gares.
-Il spécifie les ENDPOINTS pour les opérations CRUD sur les gares.
+Définition des routes liées aux stations.
+Il spécifie les ENDPOINTS pour les opérations CRUD sur les stations.
 */
 
 const express = require('express');
@@ -11,8 +11,8 @@ const { authMiddleware } = require('../utils/auth');
 /**
  * @swagger
  * tags:
- *   name: Station
- *   description: Opérations liées aux gares
+ *   name: Stations
+ *   description: Opérations liées aux Stations
  */
 
 /**
@@ -47,7 +47,7 @@ const { authMiddleware } = require('../utils/auth');
  * /stations:
  *   post:
  *     summary: Créer une nouvelle station (Admin uniquement)
- *     tags: [Gares]
+ *     tags: [Stations]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -80,7 +80,7 @@ router.post('/', authMiddleware, stationController.createStation);
  * /stations:
  *   get:
  *     summary: Récupérer la liste de toutes les stations
- *     tags: [Gares]
+ *     tags: [Stations]
  *     responses:
  *       200:
  *         description: Liste des stations récupérée avec succès
@@ -101,7 +101,7 @@ router.get('/', stationController.getAllStations);
  * /stations/{stationId}:
  *   get:
  *     summary: Récupérer une station par son ID
- *     tags: [Gares]
+ *     tags: [Stations]
  *     parameters:
  *       - in: path
  *         name: stationId
@@ -128,7 +128,7 @@ router.get('/:stationId', stationController.getStationById);
  * /stations/{stationId}:
  *   put:
  *     summary: Mettre à jour une station par son ID (Admin uniquement)
- *     tags: [Gares]
+ *     tags: [Stations]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -171,7 +171,7 @@ router.put('/:stationId', authMiddleware, stationController.updateStation);
  * /stations/{stationId}:
  *   delete:
  *     summary: Supprimer une station par son ID (Admin uniquement)
- *     tags: [Gares]
+ *     tags: [Stations]
  *     security:
  *       - bearerAuth: []
  *     parameters:
