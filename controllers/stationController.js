@@ -76,10 +76,8 @@ exports.deleteStation = async (req, res) => {
     }
     try {
         const { stationId } = req.params;
-        // Vérifiez d'abord si des trains sont associés à cette station
         const relatedTrains = await Train.find({ $or: [{ start_station: stationId }, { end_station: stationId }] });
         if (relatedTrains.length > 0) {
-            // Empêchez la suppression si la station est utilisée par des trains
             return res.status(400).json({
                 message: "Cannot delete station because it is associated with one or more trains."
             });
