@@ -1,11 +1,16 @@
 // app.js
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const specs = require('./swagger');
 const mongoose = require('./config/db'); // Utilisation de la configuration de la base de données
 const passport = require('./config/passport'); // Configuration de Passport pour l'authentification
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const app = express();
+
+// Documentation Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Configuration de Passport
 app.use(session({
