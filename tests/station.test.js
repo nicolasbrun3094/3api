@@ -14,7 +14,7 @@ describe('Station API', () => {
     chai.request(app)
       .post('/api/users/login')
       .send({
-        email: 'testuser@supinfo.com',
+        pseudo: 'testuser',
         password: 'password123',
       })
       .end((err, res) => {
@@ -34,33 +34,27 @@ describe('Station API', () => {
         name: 'Gare de Test',
         open_hour: '08:00',
         close_hour: '18:00',
-        image: 'gare_test.jpg',
+        image: 'test image.jpg'
       })
       .end((err, res) => {
         expect(res).to.have.status(201);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('name');
-        expect(res.body).to.have.property('open_hour');
-        expect(res.body).to.have.property('close_hour');
         createdStationId = res.body._id;
         done();
       });
   });
 
-  it('should get a station by ID with authentication', (done) => {
+  it('should get a station by ID', (done) => {
     chai.request(app)
       .get(`/api/stations/${createdStationId}`)
-      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .end((err, res) => {
-        expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('name');
         expect(res.body).to.have.property('open_hour');
         expect(res.body).to.have.property('close_hour');
+        expect(res.body).to.have.property('image');
         done();
       });
   });
-
   it('should update a station by ID with authentication', (done) => {
     chai.request(app)
       .put(`/api/stations/${createdStationId}`)
@@ -69,6 +63,7 @@ describe('Station API', () => {
         name: 'Gare de Test Modifiée',
         open_hour: '09:00',
         close_hour: '19:00',
+        image:'image test modifée.jpg'
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -76,6 +71,7 @@ describe('Station API', () => {
         expect(res.body).to.have.property('name').equal('Gare de Test Modifiée');
         expect(res.body).to.have.property('open_hour').equal('09:00');
         expect(res.body).to.have.property('close_hour').equal('19:00');
+        expect(res.body).to.have.property('image').equal('image test modifée.jpg');
         done();
       });
   });

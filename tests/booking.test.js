@@ -14,7 +14,7 @@ describe('Booking API', () => {
     chai.request(app)
       .post('/api/users/login')
       .send({
-        email: 'testuser@supinfo.com',
+        pseudo: 'testuser',
         password: 'password123',
       })
       .end((err, res) => {
@@ -29,10 +29,10 @@ describe('Booking API', () => {
   it('should create a new booking with authentication', (done) => {
     chai.request(app)
       .post('/api/bookings')
-      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
+      .set('Authorization', `Bearer ${authToken}`)
       .send({
-        user: '657af64e8f3bed2a5bee2e55', // à remplacer par l'id de l'utilisateur dans railddb
-        train: '657aede4dfb77320fecd2cd2', // à remplacer par l'id du train dans railddb
+        userId: '657b2b177075927bce7d7f11', // Remplace par l'id de l'utilisateur dans railddb
+        trainId: '657aede4dfb77320fecd2cd2', // Remplace par l'id du train dans railddb
         date: new Date("2024-01-01T12:00:00.000Z"),
       })
       .end((err, res) => {
@@ -63,16 +63,14 @@ describe('Booking API', () => {
   it('should update a booking by ID with authentication', (done) => {
     chai.request(app)
       .put(`/api/bookings/${createdBookingId}`)
-      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
+      .set('Authorization', `Bearer ${authToken}`)
       .send({
-        // Les données de mise à jour de la réservation
+        date: new Date("2024-01-02T14:00:00.000Z"), // Ajoutez les données de mise à jour de la réservation
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('user');
-        expect(res.body).to.have.property('train');
-        expect(res.body).to.have.property('date');
+        expect(res.body.message).to.equal('Booking updated successfully'); // Accédez à la propriété message directement
         done();
       });
   });
@@ -80,7 +78,7 @@ describe('Booking API', () => {
   it('should delete a booking by ID with authentication', (done) => {
     chai.request(app)
       .delete(`/api/bookings/${createdBookingId}`)
-      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
+      .set('Authorization', `Bearer ${authToken}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message').equal('Booking deleted successfully');

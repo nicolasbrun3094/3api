@@ -14,7 +14,7 @@ describe('Train API', () => {
     chai.request(app)
       .post('/api/users/login')
       .send({
-        email: 'testuser@supinfo.com',
+        pseudo: 'testuser',
         password: 'password123',
       })
       .end((err, res) => {

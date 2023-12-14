@@ -79,7 +79,7 @@ async function updateBooking (req, res) {
         // Sauvegardez les modifications
         const updatedBooking = await booking.save();
 
-        res.json({ message: "Booking updated successfully", updatedBooking });
+        res.json(200).json({ message: "Booking updated successfully", updatedBooking });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
