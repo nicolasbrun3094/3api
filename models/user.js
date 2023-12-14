@@ -7,7 +7,6 @@ Il spécifie les champs nécessaires comme id, email, pseudo, mot de passe, etc.
 // models/user.js
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
-const bcrypt = require('bcrypt'); // Ajouter cette ligne pour utiliser bcrypt
 
 const userSchema = new mongoose.Schema({
   email: {

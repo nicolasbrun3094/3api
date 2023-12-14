@@ -91,13 +91,12 @@ router.post('/register', userController.registerUser);
  *         application/json:
  *           schema:
  *             properties:
- *               email:
+ *               pseudo:
  *                 type: string
- *                 format: email
  *               password:
  *                 type: string
  *             required:
- *               - email
+ *               - pseudo
  *               - password
  *     responses:
  *       200:
