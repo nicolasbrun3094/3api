@@ -50,7 +50,7 @@ const { authMiddleware } = require('../utils/auth');
 
 /**
  * @swagger
- * /trains:
+ * /api/trains:
  *   get:
  *     summary: Répertorier tous les trains avec tri et limite
  *     tags: [Trains]
@@ -70,7 +70,7 @@ router.get('/', trainController.getAllTrains);
 
 /**
  * @swagger
- * /trains:
+ * /api/trains:
  *   post:
  *     summary: Créer un nouveau train (Admin uniquement)
  *     tags: [Trains]
@@ -103,7 +103,7 @@ router.post('/', authMiddleware, trainController.createTrain);
 
 /**
  * @swagger
- * /trains/{trainId}:
+ * /api/trains/{trainId}:
  *   get:
  *     summary: Obtenir un train spécifique par son ID
  *     tags: [Trains]
@@ -130,7 +130,7 @@ router.get('/:trainId', trainController.getTrainById);
 
 /**
  * @swagger
- * /trains/{trainId}:
+ * /api/trains/{trainId}:
  *   put:
  *     summary: Mettre à jour un train spécifique par son ID (Admin uniquement)
  *     tags: [Trains]
@@ -172,7 +172,7 @@ router.put('/:trainId', authMiddleware, trainController.updateTrain);
 
 /**
  * @swagger
- * /trains/{trainId}:
+ * /api/trains/{trainId}:
  *   delete:
  *     summary: Supprimer un train spécifique par son ID (Admin uniquement)
  *     tags: [Trains]

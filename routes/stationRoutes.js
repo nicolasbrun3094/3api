@@ -54,7 +54,7 @@ const upload = multer({ storage: storage });
 
 /**
  * @swagger
- * /stations:
+ * /api/stations:
  *   post:
  *     summary: Créer une nouvelle station (Admin uniquement)
  *     tags: [Stations]
@@ -87,7 +87,7 @@ router.post('/', authMiddleware, upload.single('image'), stationController.creat
 
 /**
  * @swagger
- * /stations:
+ * /api/stations:
  *   get:
  *     summary: Récupérer la liste de toutes les stations
  *     tags: [Stations]
@@ -108,7 +108,7 @@ router.get('/', stationController.getAllStations);
 
 /**
  * @swagger
- * /stations/{stationId}:
+ * /api/stations/{stationId}:
  *   get:
  *     summary: Récupérer une station par son ID
  *     tags: [Stations]
@@ -135,7 +135,7 @@ router.get('/:stationId', stationController.getStationById);
 
 /**
  * @swagger
- * /stations/{stationId}:
+ * /api/stations/{stationId}:
  *   put:
  *     summary: Mettre à jour une station par son ID (Admin uniquement)
  *     tags: [Stations]
@@ -178,7 +178,7 @@ router.put('/:stationId', authMiddleware, stationController.updateStation);
 
 /**
  * @swagger
- * /stations/{stationId}:
+ * /api/stations/{stationId}:
  *   delete:
  *     summary: Supprimer une station par son ID (Admin uniquement)
  *     tags: [Stations]

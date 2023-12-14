@@ -3,6 +3,7 @@ const chaiHttp = require('chai-http');
 const app = require('../app'); 
 const expect = chai.expect;
 
+
 chai.use(chaiHttp);
 
 describe('Booking API', () => {
@@ -10,10 +11,11 @@ describe('Booking API', () => {
 
   it('should create a new booking', (done) => {
     chai.request(app)
-      .post('/bookings')
+      .post('/api/bookings')
       .send({
-        user: 'userId', // à remplacer par id de user dans railddb
-        train: 'trainId', // à remplacer par id de train dans railddb
+        user: '657af64e8f3bed2a5bee2e55', // à remplacer par id de user dans railddb
+        train: '657aede4dfb77320fecd2cd2', // à remplacer par id de train dans railddb
+        date: ISODate("2024-01-01T12:00:00.000Z"), 
       })
       .end((err, res) => {
         expect(res).to.have.status(201);
@@ -28,7 +30,7 @@ describe('Booking API', () => {
 
   it('should get a booking by ID', (done) => {
     chai.request(app)
-      .get(`/bookings/${createdBookingId}`)
+      .get(`/api/bookings/${createdBookingId}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
@@ -41,7 +43,7 @@ describe('Booking API', () => {
 
   it('should update a booking by ID', (done) => {
     chai.request(app)
-      .put(`/bookings/${createdBookingId}`)
+      .put(`/api/bookings/${createdBookingId}`)
       .send({
         // Les données de mise à jour de la réservation
       })
@@ -57,7 +59,7 @@ describe('Booking API', () => {
 
   it('should delete a booking by ID', (done) => {
     chai.request(app)
-      .delete(`/bookings/${createdBookingId}`)
+      .delete(`/api/bookings/${createdBookingId}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message').equal('Booking deleted successfully');

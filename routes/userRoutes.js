@@ -53,7 +53,7 @@ const passport = require('passport');
 
 /**
  * @swagger
- * /users/register:
+ * /api/users/register:
  *   post:
  *     summary: Inscription d'un nouvel utilisateur
  *     tags: [Utilisateurs]
@@ -80,7 +80,7 @@ router.post('/register', userController.registerUser);
 
 /**
  * @swagger
- * /users/login:
+ * /api/users/login:
  *   post:
  *     summary: Connexion d'un utilisateur
  *     tags: [Utilisateurs]
@@ -116,7 +116,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 
 /**
  * @swagger
- * /users/{userId}:
+ * /api/users/{userId}:
  *   get:
  *     summary: Obtenir les informations d'un utilisateur spécifique
  *     tags: [Utilisateurs]
@@ -147,7 +147,7 @@ router.get('/:userId', authMiddleware, userController.getUser);
 
 /**
  * @swagger
- * /users/{userId}:
+ * /api/users/{userId}:
  *   put:
  *     summary: Mettre à jour un utilisateur spécifique
  *     tags: [Utilisateurs]
@@ -189,7 +189,7 @@ router.put('/:userId', authMiddleware, userController.updateUser);
 
 /**
  * @swagger
- * /users/{userId}:
+ * /api/users/{userId}:
  *   delete:
  *     summary: Supprimer un utilisateur spécifique
  *     tags: [Utilisateurs]

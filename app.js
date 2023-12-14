@@ -6,8 +6,12 @@ const mongoose = require('./config/db'); // Utilisation de la configuration de l
 const passport = require('./config/passport'); // Configuration de Passport pour l'authentification
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cors = require('cors');
 
 const app = express();
+
+//Autorisation CORS
+app.use(cors());
 
 // Documentation Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

@@ -10,11 +10,11 @@ describe('Train API', () => {
 
   it('should create a new train', (done) => {
     chai.request(app)
-      .post('/trains')
+      .post('/api/trains')
       .send({
         name: 'Train de Test',
         start_station: 'Gare de Départ',
-        end_station: 'Gare d\'Arrivée',
+        end_station: 'Gare d Arrivée',
         time_of_departure: '2023-12-01T08:00:00Z',
       })
       .end((err, res) => {
@@ -31,7 +31,7 @@ describe('Train API', () => {
 
   it('should get a train by ID', (done) => {
     chai.request(app)
-      .get(`/trains/${createdTrainId}`)
+      .get(`/api/trains/${createdTrainId}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
@@ -45,7 +45,7 @@ describe('Train API', () => {
 
   it('should update a train by ID', (done) => {
     chai.request(app)
-      .put(`/trains/${createdTrainId}`)
+      .put(`/api/trains/${createdTrainId}`)
       .send({
         name: 'Train de Test Modifié',
         start_station: 'Gare Modifiée de Départ',
@@ -65,7 +65,7 @@ describe('Train API', () => {
 
   it('should delete a train by ID', (done) => {
     chai.request(app)
-      .delete(`/trains/${createdTrainId}`)
+      .delete(`/api/trains/${createdTrainId}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message').equal('Train deleted successfully');

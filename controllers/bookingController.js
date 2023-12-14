@@ -8,7 +8,7 @@ const Train = require('../models/train');
 const User = require('../models/user');
 
 // Créer une nouvelle réservation
-exports.createBooking = async (req, res) => {
+async function createBooking(req, res) {
     try {
         const { userId, trainId, date } = req.body;
 
@@ -35,7 +35,7 @@ exports.createBooking = async (req, res) => {
 };
 
 // Obtenir une réservation spécifique
-exports.getBooking = async (req, res) => {
+async function getBooking (req, res) {
     try {
         const { bookingId } = req.params;
 
@@ -51,7 +51,7 @@ exports.getBooking = async (req, res) => {
 };
 
 // Mettre à jour une réservation
-exports.updateBooking = async (req, res) => {
+async function updateBooking (req, res) {
     try {
         const { bookingId } = req.params;
         const updateData = req.body;
@@ -86,7 +86,7 @@ exports.updateBooking = async (req, res) => {
 };
 
 // Supprimer une réservation
-exports.deleteBooking = async (req, res) => {
+async function deleteBooking(req, res) {
     try {
         const { bookingId } = req.params;
 
@@ -103,7 +103,7 @@ exports.deleteBooking = async (req, res) => {
 };
 
 // Valider une réservation
-exports.validateBooking = async (req, res) => {
+async function validateBooking (req, res) {
     try {
         const { bookingId } = req.params;
 

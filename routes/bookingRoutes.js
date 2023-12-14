@@ -44,7 +44,7 @@ const { authMiddleware } = require('../utils/auth');
 
 /**
  * @swagger
- * /bookings:
+ * /api/bookings:
  *   post:
  *     summary: Créer une nouvelle réservation
  *     tags: [Réservations]
@@ -75,7 +75,7 @@ router.post('/', authMiddleware, bookingController.createBooking);
 
 /**
  * @swagger
- * /bookings/{bookingId}:
+ * /api/bookings/{bookingId}:
  *   get:
  *     summary: Obtenir une réservation par son ID
  *     tags: [Réservations]
@@ -106,7 +106,7 @@ router.get('/:bookingId', authMiddleware, bookingController.getBooking);
 
 /**
  * @swagger
- * /bookings/{bookingId}:
+ * /api/bookings/{bookingId}:
  *   put:
  *     summary: Mettre à jour une réservation par son ID
  *     tags: [Réservations]
@@ -144,7 +144,7 @@ router.put('/:bookingId', authMiddleware, bookingController.updateBooking);
 
 /**
  * @swagger
- * /bookings/{bookingId}:
+ * /api/bookings/{bookingId}:
  *   delete:
  *     summary: Supprimer une réservation par son ID
  *     tags: [Réservations]
@@ -171,7 +171,7 @@ router.delete('/:bookingId', authMiddleware, bookingController.deleteBooking);
 
 /**
  * @swagger
- * /bookings/{bookingId}/validate:
+ * /api/bookings/{bookingId}/validate:
  *   patch:
  *     summary: Valider une réservation par son ID
  *     tags: [Réservations]

@@ -10,11 +10,13 @@ describe('User API', () => {
 
   it('should register a new user', (done) => {
     chai.request(app)
-      .post('/users/register')
+      .post('/api/users/register')
       .send({
         email: 'testuser@example.com',
         pseudo: 'testuser',
         password: 'password123',
+        role: 'user',
+        employee: true,
       })
       .end((err, res) => {
         expect(res).to.have.status(201);
@@ -46,7 +48,7 @@ describe('User API', () => {
 
   it('should get a user by ID', (done) => {
     chai.request(app)
-      .get(`/users/${createdUserId}`)
+      .get(`/api/users/${createdUserId}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
@@ -58,7 +60,7 @@ describe('User API', () => {
 
   it('should update a user by ID', (done) => {
     chai.request(app)
-      .put(`/users/${createdUserId}`)
+      .put(`/api/users/${createdUserId}`)
       .send({
         pseudo: 'updateduser',
       })
@@ -72,7 +74,7 @@ describe('User API', () => {
 
   it('should delete a user by ID', (done) => {
     chai.request(app)
-      .delete(`/users/${createdUserId}`)
+      .delete(`/api/users/${createdUserId}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message').equal('User deleted successfully');

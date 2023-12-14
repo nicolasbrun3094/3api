@@ -11,7 +11,7 @@ const isAdmin = (req) => {
 };
 
 // Répertorier tous les trains avec tri et limite
-exports.getAllTrains = async (req, res) => {
+async function getAllTrains(req, res) {
     try {
         const { sort, limit = 10 } = req.query;
         let query = Train.find();
@@ -27,10 +27,10 @@ exports.getAllTrains = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
 
 // Créer un nouveau train
-exports.createTrain = async (req, res) => {
+async function createTrain(req, res) {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
@@ -43,10 +43,10 @@ exports.createTrain = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
 
 // Obtenir un train spécifique par son ID
-exports.getTrainById = async (req, res) => {
+async function getTrainById(req, res) {
     try {
         const { trainId } = req.params;
         const train = await Train.findById(trainId);
@@ -57,10 +57,11 @@ exports.getTrainById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
+
 
 // Mettre à jour un train spécifique
-exports.updateTrain = async (req, res) => {
+async function updateTrain(req, res) {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
@@ -76,10 +77,11 @@ exports.updateTrain = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+}
+
 
 // Supprimer un train spécifique
-exports.deleteTrain = async (req, res) => {
+async function deleteTrain(req, res) {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
@@ -91,7 +93,7 @@ exports.deleteTrain = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+}
 
 module.exports = {
     getAllTrains,

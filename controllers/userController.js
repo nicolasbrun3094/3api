@@ -7,7 +7,7 @@ const User = require('../models/user');
 const passport = require('passport');
 
 // Inscrire un nouvel utilisateur
-exports.registerUser = async (req, res) => {
+async function registerUser (req, res) {
     try {
         const { email, pseudo, password } = req.body;
         const newUser = new User({ email, pseudo });
@@ -29,7 +29,7 @@ exports.registerUser = async (req, res) => {
 };
 
 // Obtenir les informations d'un utilisateur
-exports.getUser = async (req, res) => {
+async function getUser (req, res){
     try {
         const { userId } = req.params;
         const requestingUser = req.user;
@@ -50,7 +50,7 @@ exports.getUser = async (req, res) => {
 };
 
 // Mettre à jour un utilisateur
-exports.updateUser = async (req, res) => {
+async function updateUser (req, res){
     try {
         const { userId } = req.params;
         const requestingUser = req.user;
@@ -68,7 +68,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // Supprimer un utilisateur
-exports.deleteUser = async (req, res) => {
+async function deleteUser (req, res){
     try {
         const { userId } = req.params;
         const requestingUser = req.user;

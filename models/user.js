@@ -38,7 +38,8 @@ userSchema.methods.canAccessUser = function (targetUserId) {
   return false;
 };
 
-userSchema.plugin(passportLocalMongoose);
+//"pseudo" == d'utilisateur pour Passport.js
+userSchema.plugin(passportLocalMongoose, { usernameField: 'pseudo' })
 
 const User = mongoose.model('User', userSchema);
 

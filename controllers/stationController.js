@@ -16,7 +16,7 @@ const isAdmin = (req) => {
 };
 
 // Créer une nouvelle station
-exports.createStation = upload.single('image'), async (req, res) => {
+async function createStation(req, res) {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
@@ -32,10 +32,10 @@ exports.createStation = upload.single('image'), async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
 
 // Récupérer la liste de toutes les stations avec tri par nom
-exports.getAllStations = async (req, res) => {
+async function getAllStations(req, res) {
     try {
         const sortField = req.query.sort || 'name'; // Tri par nom par défaut
         const stations = await Station.find().sort(sortField);
@@ -43,10 +43,10 @@ exports.getAllStations = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
 
 // Récupérer une station spécifique par ID
-exports.getStationById = async (req, res) => {
+async function getStationById(req, res) {
     try {
         const { stationId } = req.params;
         const station = await Station.findById(stationId);
@@ -57,10 +57,11 @@ exports.getStationById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
+
 
 // Mettre à jour une station spécifique
-exports.updateStation = upload.single('image'), async (req, res) => {
+async function updateStation(req, res) {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
@@ -79,10 +80,10 @@ exports.updateStation = upload.single('image'), async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
 
 // Supprimer une station spécifique
-exports.deleteStation = async (req, res) => {
+async function deleteStation(req, res) {
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
@@ -99,7 +100,8 @@ exports.deleteStation = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
+
 
 module.exports = {
     createStation,
