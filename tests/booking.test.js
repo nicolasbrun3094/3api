@@ -15,7 +15,7 @@ describe('Booking API', () => {
       .send({
         user: '657af64e8f3bed2a5bee2e55', // à remplacer par id de user dans railddb
         train: '657aede4dfb77320fecd2cd2', // à remplacer par id de train dans railddb
-        date: ISODate("2024-01-01T12:00:00.000Z"), 
+        date: new Date("2024-01-01T12:00:00.000Z"), 
       })
       .end((err, res) => {
         expect(res).to.have.status(201);
