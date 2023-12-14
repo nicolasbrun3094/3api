@@ -7,6 +7,7 @@ Il spécifie les champs nécessaires comme id, email, pseudo, mot de passe, etc.
 // models/user.js
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const bcrypt = require('bcrypt'); // Ajouter cette ligne pour utiliser bcrypt
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -18,7 +19,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password: String,
+  password: {
+    type: String,
+  },
   role: {
     type: String,
     enum: ['user', 'admin'],
@@ -30,8 +33,17 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-//"pseudo" == d'utilisateur pour Passport.js
-userSchema.plugin(passportLocalMongoose, { usernameField: 'pseudo' })
+userSchema.plugin(passportLocalMongoose, { usernameField: 'pseudo' });
+
+// Ajouter une méthode pour vérifier le mot de passe
+userSchema.methods.verifyPassword = async function (password) {
+  try {
+    // Comparer le mot de passe fourni avec le mot de passe stocké
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw error;
+  }
+};
 
 const User = mongoose.model('User', userSchema);
 

@@ -5,12 +5,14 @@
 // controllers/userController.js
 const User = require('../models/user');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
+
 
 // Inscrire un nouvel utilisateur
-async function registerUser (req, res) {
+async function registerUser(req, res) {
     try {
-        const { email, pseudo, password } = req.body;
-        const newUser = new User({ email, pseudo });
+        const { email, pseudo, password, role } = req.body;
+        const newUser = new User({ email, pseudo, role });
 
         User.register(newUser, password, (err, user) => {
             if (err) {
@@ -26,7 +28,35 @@ async function registerUser (req, res) {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+}
+
+// Connect utilisateur
+async function loginUser(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    // Trouver l'utilisateur par email
+    const user = await User.findOne({ email });
+
+    // Vérifier si l'utilisateur existe et si le mot de passe est correct
+    if (!user || !(await user.verifyPassword(password))) {
+      return res.status(401).json({ message: 'Identifiants invalides' });
+    }
+
+    // Créer un token JWT avec l'ID de l'utilisateur, son email et son rôle
+    const token = jwt.sign(
+      { userId: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' } // Durée de validité du token
+    );
+
+    // Répondre avec le token
+    res.json({ message: 'Logged in successfully', token });
+  } catch (error) {
+    console.error('Erreur lors de l\'authentification :', error);
+    res.status(500).json({ message: 'Erreur lors de l\'authentification' });
+  }
+}
 
 // Obtenir les informations d'un utilisateur
 async function getUser (req, res){
@@ -86,6 +116,7 @@ async function deleteUser (req, res){
 
 module.exports = {
     registerUser,
+    loginUser,
     getUser,
     updateUser,
     deleteUser

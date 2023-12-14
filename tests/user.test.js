@@ -26,7 +26,7 @@ describe('User API', () => {
         expect(res.body).to.have.property('pseudo').equal('testuser');
         createdUserId = res.body._id;
 
-        // Log in the user to get the authentication token
+        
         chai.request(app)
           .post('/api/users/login')
           .send({

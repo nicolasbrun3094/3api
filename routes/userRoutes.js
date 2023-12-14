@@ -108,11 +108,8 @@ router.post('/register', userController.registerUser);
  *         description: Erreur interne du serveur
  */
 
-// Cette route peut nécessiter une configuration supplémentaire si vous utilisez Passport.js pour l'authentification
-router.post('/login', passport.authenticate('local'), (req, res) => {
-    // Vous pouvez personnaliser la réponse ici
-    res.json({ message: "Logged in successfully", user: req.user });
-});
+// Connect User
+router.post('/login', userController.loginUser);
 
 /**
  * @swagger
