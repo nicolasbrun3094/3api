@@ -7,10 +7,29 @@ chai.use(chaiHttp);
 
 describe('Train API', () => {
   let createdTrainId;
+  let authToken; // Pour stocker le token d'authentification
 
-  it('should create a new train', (done) => {
+  before((done) => {
+    // Log in with a user to get the authentication token
+    chai.request(app)
+      .post('/api/users/login')
+      .send({
+        email: 'testuser@supinfo.com',
+        password: 'password123',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('message').equal('Logged in successfully');
+        expect(res.body).to.have.property('token');
+        authToken = res.body.token; // Stocke le token pour les tests ultérieurs
+        done();
+      });
+  });
+
+  it('should create a new train with authentication', (done) => {
     chai.request(app)
       .post('/api/trains')
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .send({
         name: 'Train de Test',
         start_station: 'Gare de Départ',
@@ -29,9 +48,10 @@ describe('Train API', () => {
       });
   });
 
-  it('should get a train by ID', (done) => {
+  it('should get a train by ID with authentication', (done) => {
     chai.request(app)
       .get(`/api/trains/${createdTrainId}`)
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
@@ -43,9 +63,10 @@ describe('Train API', () => {
       });
   });
 
-  it('should update a train by ID', (done) => {
+  it('should update a train by ID with authentication', (done) => {
     chai.request(app)
       .put(`/api/trains/${createdTrainId}`)
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .send({
         name: 'Train de Test Modifié',
         start_station: 'Gare Modifiée de Départ',
@@ -63,9 +84,10 @@ describe('Train API', () => {
       });
   });
 
-  it('should delete a train by ID', (done) => {
+  it('should delete a train by ID with authentication', (done) => {
     chai.request(app)
       .delete(`/api/trains/${createdTrainId}`)
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message').equal('Train deleted successfully');

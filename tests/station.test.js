@@ -6,16 +6,35 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Station API', () => {
-  let createdStationId; 
+  let createdStationId;
+  let authToken; // Pour stocker le token d'authentification
 
-  it('should create a new station', (done) => {
+  before((done) => {
+    // Log in with a user to get the authentication token
+    chai.request(app)
+      .post('/api/users/login')
+      .send({
+        email: 'testuser@supinfo.com',
+        password: 'password123',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('message').equal('Logged in successfully');
+        expect(res.body).to.have.property('token');
+        authToken = res.body.token; // Stocke le token pour les tests ultérieurs
+        done();
+      });
+  });
+
+  it('should create a new station with authentication', (done) => {
     chai.request(app)
       .post('/api/stations')
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .send({
         name: 'Gare de Test',
         open_hour: '08:00',
         close_hour: '18:00',
-        image: "gare_test.jpg"
+        image: 'gare_test.jpg',
       })
       .end((err, res) => {
         expect(res).to.have.status(201);
@@ -28,9 +47,10 @@ describe('Station API', () => {
       });
   });
 
-  it('should get a station by ID', (done) => {
+  it('should get a station by ID with authentication', (done) => {
     chai.request(app)
       .get(`/api/stations/${createdStationId}`)
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
@@ -41,9 +61,10 @@ describe('Station API', () => {
       });
   });
 
-  it('should update a station by ID', (done) => {
+  it('should update a station by ID with authentication', (done) => {
     chai.request(app)
       .put(`/api/stations/${createdStationId}`)
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .send({
         name: 'Gare de Test Modifiée',
         open_hour: '09:00',
@@ -59,9 +80,10 @@ describe('Station API', () => {
       });
   });
 
-  it('should delete a station by ID', (done) => {
+  it('should delete a station by ID with authentication', (done) => {
     chai.request(app)
       .delete(`/api/stations/${createdStationId}`)
+      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message').equal('Station deleted successfully');
