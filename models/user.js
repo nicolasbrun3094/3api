@@ -30,14 +30,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Méthode pour vérifier si un utilisateur peut accéder aux informations d'un autre utilisateur
-userSchema.methods.canAccessUser = function (targetUserId) {
-  if (this.role === 'admin' || this._id.equals(targetUserId) || this.employee) {
-    return true;
-  }
-  return false;
-};
-
 //"pseudo" == d'utilisateur pour Passport.js
 userSchema.plugin(passportLocalMongoose, { usernameField: 'pseudo' })
 
