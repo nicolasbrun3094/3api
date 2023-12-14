@@ -32,31 +32,33 @@ async function registerUser(req, res) {
 
 // Connect utilisateur
 async function loginUser(req, res) {
-  try {
-    const { email, password } = req.body;
-
-    // Trouver l'utilisateur par email
-    const user = await User.findOne({ email });
-
-    // Vérifier si l'utilisateur existe et si le mot de passe est correct
-    if (!user || !(await user.verifyPassword(password))) {
-      return res.status(401).json({ message: 'Identifiants invalides' });
+    try {
+      const { pseudo, password } = req.body;
+  
+      // authenticate fournie par passport-local-mongoose
+      User.authenticate()(pseudo, password, (err, user, info) => {
+        if (err) {
+          return res.status(500).json({ message: 'Erreur interne du serveur' });
+        }
+        if (!user) {
+          return res.status(401).json({ message: 'Identifiants invalides' });
+        }
+  
+        const token = jwt.sign(
+          { userId: user._id, email: user.email, role: user.role },
+          process.env.JWT_SECRET,
+          { expiresIn: '1h' } // Durée de validité du token
+        );
+  
+        // Répondre avec le token
+        res.json({ message: 'Logged in successfully', token });
+      });
+    } catch (error) {
+      console.error('Erreur lors de l\'authentification :', error);
+      res.status(500).json({ message: 'Erreur lors de l\'authentification' });
     }
-
-    // Créer un token JWT avec l'ID de l'utilisateur, son email et son rôle
-    const token = jwt.sign(
-      { userId: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' } // Durée de validité du token
-    );
-
-    // Répondre avec le token
-    res.json({ message: 'Logged in successfully', token });
-  } catch (error) {
-    console.error('Erreur lors de l\'authentification :', error);
-    res.status(500).json({ message: 'Erreur lors de l\'authentification' });
   }
-}
+  
 
 // Obtenir les informations d'un utilisateur
 async function getUser (req, res){

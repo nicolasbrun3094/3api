@@ -35,16 +35,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'pseudo' });
 
-// Ajouter une méthode pour vérifier le mot de passe
-userSchema.methods.verifyPassword = async function (password) {
-  try {
-    // Comparer le mot de passe fourni avec le mot de passe stocké
-    return await bcrypt.compare(password, this.password);
-  } catch (error) {
-    throw error;
-  }
-};
-
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
