@@ -50,6 +50,8 @@ const passport = require('passport');
  *         email: user@example.com
  *         pseudo: user123
  *         password: secret123
+ *         role: user
+ *         employee: trued
  */
 
 /**
