@@ -7,6 +7,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const { authMiddleware } = require('../utils/auth');
+const { validateUser } = require('../utils/validation');
 const passport = require('passport');
 
 /**
@@ -76,7 +77,7 @@ const passport = require('passport');
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/register', userController.registerUser);
+router.post('/register', validateUser, userController.registerUser);
 
 /**
  * @swagger
@@ -108,7 +109,7 @@ router.post('/register', userController.registerUser);
  */
 
 // Connect User
-router.post('/login', userController.loginUser);
+router.post('/login', validateUser, userController.loginUser);
 
 /**
  * @swagger

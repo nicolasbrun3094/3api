@@ -15,7 +15,7 @@ const validateUser = (req, res, next) => {
       pseudo: Joi.string().required(),
       password: Joi.string().required(),
       role: Joi.string().valid('user', 'admin').default('user'),
-      employee: Joi.boolean().default(false),
+      employee: Joi.boolean(),
     });
 
   // Valider les données de la requête par rapport au schéma

@@ -86,7 +86,7 @@ async function getUser (req, res){
         }
 
         // Vérifiez si l'utilisateur est autorisé à accéder à l'utilisateur
-        if (requestingUser && (requestingUser._id.equals(userId) || requestingUser.role === 'admin')) {
+        if (requestingUser && (requestingUser._id.equals(userId) || requestingUser.role === 'admin' || requestingUser.employee === true)) {
             res.json(user);
         } else {
             res.status(403).json({ message: "Forbidden" });
