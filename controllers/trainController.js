@@ -96,15 +96,20 @@ async function updateTrain(req, res) {
 
 // Supprimer un train spécifique
 async function deleteTrain(req, res) {
+    // Vérifier si l'utilisateur est un administrateur
     if (!isAdmin(req)) {
         return res.status(403).json({ message: "Unauthorized: Only administrators can perform this action." });
     }
 
     try {
+        // Récupérer l'ID du train depuis les paramètres de la requête
         const { trainId } = req.params;
+        // Vérifier si le train existe
         await Train.findByIdAndDelete(trainId);
+        // Renvoyer la réponse
         res.status(200).json({ message: "Train deleted successfully" });
     } catch (error) {
+        // Gérer les erreurs
         res.status(500).json({ message: "Server error" });
     }
 }
