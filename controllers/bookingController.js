@@ -39,11 +39,12 @@ async function getBooking (req, res) {
     try {
         const { bookingId } = req.params;
 
+        // Recherchez la réservation par ID
         const booking = await Booking.findById(bookingId).populate('user').populate('train');
         if (!booking) {
             return res.status(404).json({ message: "Booking not found" });
         }
-
+        // Vérifiez si l'utilisateur est autorisé à accéder à la réservation
         res.json(booking);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -58,6 +59,7 @@ async function updateBooking (req, res) {
 
         // Recherchez la réservation existante
         const booking = await Booking.findById(bookingId);
+         //Si la réservation n'existe pas, renvoyez une erreur 404
         if (!booking) {
             return res.status(404).json({ message: "Booking not found" });
         }
