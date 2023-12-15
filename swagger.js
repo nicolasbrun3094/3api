@@ -9,6 +9,15 @@ const options = {
       version: '1.0.0',
       description: 'Documentation for RailRoad API',
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT', //JWT Vérification
+        },
+      },
+    },
   },
   apis: ['./routes/*.js'],
 };

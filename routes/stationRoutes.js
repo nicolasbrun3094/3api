@@ -48,7 +48,6 @@ const upload = multer({ storage: storage });
  *         name: Gare Centrale
  *         open_hour: "08:00"
  *         close_hour: "22:00"
- *         image: "base64-encoded-image-data"
  */
 
 
@@ -172,7 +171,7 @@ router.get('/:stationId', stationController.getStationById);
  *         description: Station non trouvée
  *       500:
  *         description: Erreur interne du serveur
- */
+*/
 router.put('/:stationId', authMiddleware, stationController.updateStation);
 
 

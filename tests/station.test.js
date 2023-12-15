@@ -34,7 +34,6 @@ describe('Station API', () => {
         name: 'Gare de Test',
         open_hour: '08:00',
         close_hour: '18:00',
-        image: 'test image.jpg'
       })
       .end((err, res) => {
         expect(res).to.have.status(201);
@@ -63,7 +62,6 @@ describe('Station API', () => {
         name: 'Gare de Test Modifiée',
         open_hour: '09:00',
         close_hour: '19:00',
-        image:'image test modifée.jpg'
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -71,7 +69,6 @@ describe('Station API', () => {
         expect(res.body).to.have.property('name').equal('Gare de Test Modifiée');
         expect(res.body).to.have.property('open_hour').equal('09:00');
         expect(res.body).to.have.property('close_hour').equal('19:00');
-        expect(res.body).to.have.property('image').equal('image test modifée.jpg');
         done();
       });
   });

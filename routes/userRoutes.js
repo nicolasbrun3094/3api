@@ -51,7 +51,7 @@ const passport = require('passport');
  *         pseudo: user123
  *         password: secret123
  *         role: user
- *         employee: trued
+ *         employee: true
  */
 
 /**
@@ -94,11 +94,14 @@ router.post('/register', validateUser, userController.registerUser);
  *         application/json:
  *           schema:
  *             properties:
+ *               email:
+ *                 type: string
  *               pseudo:
  *                 type: string
  *               password:
  *                 type: string
  *             required:
+ *               - email
  *               - pseudo
  *               - password
  *     responses:
@@ -119,6 +122,8 @@ router.post('/login', validateUser, userController.loginUser);
  *   get:
  *     summary: Obtenir les informations d'un utilisateur spécifique
  *     tags: [Utilisateurs]
+ *     security:
+ *       - bearerAuth: [] 
  *     parameters:
  *       - in: path
  *         name: userId
