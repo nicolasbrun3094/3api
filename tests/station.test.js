@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../app');
 const expect = chai.expect;
+const fs = require('fs');
 
 chai.use(chaiHttp);
 
@@ -28,15 +29,18 @@ describe('Station API', () => {
   });
 
   it('should create a new station with authentication', (done) => {
+    const imageBuffer = fs.readFileSync('./stationtest.jpg');
+    const imageBase64 = imageBuffer.toString('base64');
     chai.request(app)
       .post('/api/stations')
-      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
+      .set('Authorization', `Bearer ${authToken}`)
       .send({
         name: 'Gare de Test',
         open_hour: '08:00',
         close_hour: '18:00',
+        image: imageBase64,
       })
-      .end((err, res) => {
+.end((err, res) => {
         expect(res).to.have.status(201);
         createdStationId = res.body._id;
         done();

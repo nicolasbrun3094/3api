@@ -21,7 +21,7 @@ describe('User API', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message').equal('Logged in successfully');
         expect(res.body).to.have.property('token');
-        authToken = res.body.token; // Stocke le token pour les tests ultérieurs
+        authToken = res.body.token; 
         done();
       });
   });

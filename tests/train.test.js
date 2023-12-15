@@ -30,7 +30,7 @@ describe('Train API', () => {
   it('should create a new train with authentication', (done) => {
     chai.request(app)
       .post('/api/trains')
-      .set('Authorization', `Bearer ${authToken}`)  // Ajoute le token d'authentification à l'en-tête
+      .set('Authorization', `Bearer ${authToken}`)
       .send({
         name: 'Train de Test',
         start_station: 'Gare de Départ',

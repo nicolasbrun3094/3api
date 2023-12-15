@@ -11,6 +11,31 @@ const multer = require('multer');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const sizeOf = require('image-size');
+const Jimp = require('jimp');
+
+const uploadWithResize = upload.single('image');
+
+//Image Resize
+const resizeImage = async (req, res, next) => {
+    if (!req.file) {
+      return next();
+    }
+  
+    const { width, height } = sizeOf(req.file.buffer);
+  
+    // Redimensionner l'image en 200x200 pixels avec Jimp
+    const resizedImage = await Jimp.read(req.file.buffer)
+      .then((image) => {
+        return image.resize(200, 200).getBufferAsync(Jimp.AUTO);
+      })
+      .catch((err) => {
+        return next(err);
+      });
+  
+    req.file.buffer = resizedImage;
+    next();
+  };
 
 /**
  * @swagger
@@ -82,7 +107,7 @@ const upload = multer({ storage: storage });
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/', authMiddleware, upload.single('image'), stationController.createStation);
+router.post('/', authMiddleware, uploadWithResize, resizeImage, stationController.createStation);
 
 /**
  * @swagger

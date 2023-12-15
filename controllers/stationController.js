@@ -11,6 +11,7 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+
 // Fonction d'aide pour vérifier si l'utilisateur est un administrateur
 const isAdmin = (req) => {
     return req.userData && req.userData.role === 'admin';

@@ -28,8 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Middleware pour analyser les données JSON dans les requêtes
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 // Routes
 
