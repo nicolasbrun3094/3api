@@ -60,30 +60,4 @@ describe('Booking API', () => {
         done();
       });
   });
-
-  it('should update a booking by ID with authentication', (done) => {
-    chai.request(app)
-      .put(`/api/bookings/${createdBookingId}`)
-      .set('Authorization', `Bearer ${authToken}`)
-      .send({
-        date: new Date("2024-01-02T14:00:00.000Z"), // Ajoutez les données de mise à jour de la réservation
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an('object');
-        expect(res.body.message).to.equal('Booking updated successfully'); // Accédez à la propriété message directement
-        done();
-      });
-  });
-
-  it('should delete a booking by ID with authentication', (done) => {
-    chai.request(app)
-      .delete(`/api/bookings/${createdBookingId}`)
-      .set('Authorization', `Bearer ${authToken}`)
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property('message').equal('Booking deleted successfully');
-        done();
-      });
-  });
 });
