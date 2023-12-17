@@ -92,14 +92,13 @@ async function deleteBooking(req, res) {
     try {
         const { bookingId } = req.params;
 
-        // Recherchez la réservation par ID
-        const booking = await Booking.findById(bookingId);
-        if (!booking) {
+        // Recherche et Suppresion de la réservation par ID
+        const result = await Booking.deleteOne({ _id: bookingId });
+        
+        if (result.deletedCount === 0) {
             return res.status(404).json({ message: "Booking not found" });
         }
 
-        // Supprimer la réservation
-        await booking.remove();
         res.status(200).json({ message: "Booking deleted" });
     } catch (error) {
         res.status(500).json({ message: error.message });
