@@ -78,13 +78,10 @@ async function updateStation(req, res) {
     }
     try {
         const { stationId } = req.params;
-        const { name, open_hour, close_hour } = req.body;
-
-        // Récupérer la nouvelle image depuis le champ 'image' de la requête
-        const image = req.file.buffer.toString('base64');
+        const { name, open_hour, close_hour} = req.body;
 
         // Vérifier si la station existe
-        const updatedStation = await Station.findByIdAndUpdate(stationId, { name, open_hour, close_hour, image }, { new: true });
+        const updatedStation = await Station.findByIdAndUpdate(stationId, { name, open_hour, close_hour}, { new: true });
         if (!updatedStation) {
             return res.status(404).json({ message: "Station not found" });
         }
