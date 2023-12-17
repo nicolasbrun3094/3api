@@ -9,19 +9,29 @@ RailRoad Ltd a pour objectif de fournir la meilleure expérience pour les trajet
 Le projet suit une structure modulaire pour faciliter la maintenance et l'extension. Voici un aperçu des principaux dossiers et fichiers :
 
 - **config/** : Contient les fichiers de configuration, notamment `db.js` pour la configuration de la base de données et `passport.js` pour la configuration de Passport.
-- **controllers/** : Logique métier de l'application, avec des fichiers pour les utilisateurs, les trains, les gares et les réservations.
+
+- **controllers/** : Logique métier de l'application, avec des fichiers pour les utilisateurs, les trains, les gares et les réservations + - **images/** pour les images des stations.
+
 - **models/** : Définition des schémas et modèles pour les utilisateurs, les trains, les gares et les réservations.
+
 - **routes/** : Définition des routes API pour les utilisateurs, les trains, les gares et les réservations.
+
 - **tests/** : Fichiers de tests unitaires pour chaque entité.
-- **utils/** : Middleware pour la validation des données utilisateur.
+
+- **utils/** : Middleware pour la validation des données utilisateur + Authentification JWT Token .
 
 - **app.js** : Fichier principal de l'application, configurant le serveur Express, les sessions Passport, et utilisant les routes définies.
+
+- **swagger.js** : Fichier de l'implémentation de swagger.
 
 ## Installation
 
 1. Clonez le dépôt : `git clone https://github.com/nicolasbrun3094/3api`
+
 2. Installez les dépendances : `npm install`
+
 3. Configurez la base de données / les ports dans `.env` file .
+
 4. Lancez l'application : `npm start`
 
 
@@ -31,15 +41,17 @@ Le projet suit une structure modulaire pour faciliter la maintenance et l'extens
 
 2- Créer la base de données 'railroad'
 
-3- Créer des collections : Créez des collections pour les utilisateurs, les trains, les gares et les réservations.
-
 ## Fonctionnalités Principales
 
 - **Gestion des Utilisateurs :** Opérations CRUD avec des rôles (utilisateur normal, administrateur).
+
 - **Gestion des Trains et des Gares :** Opérations CRUD avec des fonctionnalités spécifiques à l'administrateur.
+
 - **Réservation et Validation des Billets :** Permet aux utilisateurs de réserver des billets et aux employés de valider leur validité.
-- **Validation des Données Utilisateur :** Utilisation du middleware (`utils/validation.js`) avec des bibliothèques telles que Joi, Yup ou AJV.
-- **Tests Unitaires :** Fournis pour garantir le bon fonctionnement des fonctionnalités.
+
+- **Validation des Données Utilisateur :** Utilisation du middleware (`utils/validation.js`) avec des bibliothèques telles que Joi, Yup ou AJV. + (`utils/auth.js`) pour l'authentification avec le JWT Token.
+
+- **Tests Unitaires :** Fournis pour garantir le bon fonctionnement des fonctionnalités ex: Train / User / Booking etc.
 
 ## Documentation
 
@@ -48,4 +60,5 @@ La documentation de l'API est générée en utilisant Swagger/OpenAPI. Vous pouv
 ## Informations Supplémentaires
 
 - **Base de Données MongoDB :** Mongoose est utilisé pour la gestion de la base de données MongoDB. Assurez-vous que votre base de données est correctement configurée dans `config/db.js`.
+
 - **Authentification avec Passport :** Passport-Local-Mongoose est utilisé pour simplifier l'authentification avec Passport.

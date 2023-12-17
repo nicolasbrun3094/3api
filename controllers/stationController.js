@@ -6,6 +6,8 @@
 const Station = require('../models/station');
 const Train = require('../models/train');
 const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 //Image Upload
 const storage = multer.memoryStorage();
@@ -26,10 +28,15 @@ async function createStation(req, res) {
         const { name, open_hour, close_hour } = req.body;
 
         // Récupérer l'image depuis le champ 'image' de la requête
-        const image = req.file.buffer.toString('base64');
+        const imageBase64 = req.file.buffer.toString('base64');
 
         // Création de la nouvelle station
-        const newStation = new Station({ name, open_hour, close_hour, image });
+        const newStation = new Station({ name, open_hour, close_hour, image: imageBase64 });
+
+        const imageName = `station_${Date.now()}.jpg`;
+        const imagePath = path.join(__dirname, 'images', imageName);
+        fs.writeFileSync(imagePath, req.file.buffer);
+
 
         // Enregistrer la nouvelle station dans la base de données
         const station = await newStation.save();
