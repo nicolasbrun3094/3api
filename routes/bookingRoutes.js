@@ -36,8 +36,8 @@ const { authMiddleware } = require('../utils/auth');
  *           format: date-time
  *           description: Date et heure de la réservation (générée automatiquement)
  *       example:
- *         user: 607c7f9b7fb8e714f8b86487
- *         train: 607c7f9b7fb8e714f8b86488
+ *         userId: 607c7f9b7fb8e714f8b86487
+ *         trainId: 607c7f9b7fb8e714f8b86488
  *         date: "2023-12-10T08:00:00.000Z"
  */
 
@@ -68,6 +68,8 @@ const { authMiddleware } = require('../utils/auth');
  *         description: Requête invalide ou données de réservation manquantes
  *       401:
  *         description: Non autorisé, token manquant ou invalide
+ *       404:
+ *         description: Train Not Found
  *       500:
  *         description: Erreur interne du serveur
  */

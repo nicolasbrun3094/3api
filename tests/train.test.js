@@ -14,9 +14,9 @@ describe('Train API', () => {
     chai.request(app)
       .post('/api/users/login')
       .send({
-        email: 'testuser@supinfo.com',
-        pseudo: 'testuser',
-        password: 'password123'
+        email: 'admin@raildroad.com',
+        pseudo: 'admin',
+        password: 'admin123456'
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
