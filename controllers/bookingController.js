@@ -44,7 +44,7 @@ async function getBooking (req, res) {
         if (!booking) {
             return res.status(404).json({ message: "Booking not found" });
         }
-       // Renvoyer la station
+        // Renvoyer la station
         res.json(booking);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -81,7 +81,7 @@ async function updateBooking (req, res) {
         // Sauvegardez les modifications
         const updatedBooking = await booking.save();
 
-        res.json(200).json({ message: "Booking updated successfully", updatedBooking });
+        res.status(200).json({ message: "Booking updated successfully", updatedBooking });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
