@@ -44,7 +44,7 @@ async function getBooking (req, res) {
         if (!booking) {
             return res.status(404).json({ message: "Booking not found" });
         }
-        // Vérifiez si l'utilisateur est autorisé à accéder à la réservation
+       // Renvoyer la station
         res.json(booking);
     } catch (error) {
         res.status(500).json({ message: error.message });
